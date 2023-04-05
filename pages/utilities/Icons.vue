@@ -1,3 +1,32 @@
+<script setup>
+import { IconService } from '@/service/IconService';
+import { computed, onMounted, ref } from 'vue';
+
+const icons = ref(null);
+const filter = ref(null);
+
+const filteredIcons = computed(() => {
+    if (filter.value) return icons.value.filter((icon) => icon.properties.name.indexOf(filter.value.toLowerCase()) > -1);
+    else return icons.value;
+});
+
+onMounted(() => {
+    IconService.getIcons().then((data) => {
+        let d_data = data;
+        let d_icons = d_data.filter((value) => {
+            return value.icon.tags.indexOf('deprecate') === -1;
+        });
+
+        d_icons.sort((icon1, icon2) => {
+            if (icon1.properties.name < icon2.properties.name) return -1;
+            else if (icon1.properties.name < icon2.properties.name) return 1;
+            else return 0;
+        });
+        icons.value = d_icons;
+    });
+});
+</script>
+
 <template>
     <div>
         <div class="card">
@@ -57,35 +86,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { IconService } from '@/service/IconService';
-import { computed, onMounted, ref } from 'vue';
-
-const icons = ref(null);
-const filter = ref(null);
-
-const filteredIcons = computed(() => {
-    if (filter.value) return icons.value.filter((icon) => icon.properties.name.indexOf(filter.value.toLowerCase()) > -1);
-    else return icons.value;
-});
-
-onMounted(() => {
-    IconService.getIcons().then((data) => {
-        let d_data = data;
-        let d_icons = d_data.filter((value) => {
-            return value.icon.tags.indexOf('deprecate') === -1;
-        });
-
-        d_icons.sort((icon1, icon2) => {
-            if (icon1.properties.name < icon2.properties.name) return -1;
-            else if (icon1.properties.name < icon2.properties.name) return 1;
-            else return 0;
-        });
-        icons.value = d_icons;
-    });
-});
-</script>
 
 <style lang="scss" scoped>
 .icons-list {

@@ -1,3 +1,20 @@
+<script setup>
+import { useLayout } from '@/layouts/composables/layout';
+import { computed } from 'vue';
+import AppConfig from '@/layouts/AppConfig.vue';
+const { layoutConfig } = useLayout();
+
+const smoothScroll = (id) => {
+    document.querySelector(id).scrollIntoView({
+        behavior: 'smooth'
+    });
+};
+
+const logoUrl = computed(() => {
+    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+});
+</script>
+
 <template>
     <div class="surface-0 flex justify-content-center">
         <div id="home" class="landing-wrapper overflow-hidden">
@@ -399,23 +416,6 @@
     </div>
     <AppConfig simple />
 </template>
-
-<script setup>
-import { useLayout } from '@/layouts/composables/layout';
-import { computed } from 'vue';
-import AppConfig from '@/layouts/AppConfig.vue';
-const { layoutConfig } = useLayout();
-
-const smoothScroll = (id) => {
-    document.querySelector(id).scrollIntoView({
-        behavior: 'smooth'
-    });
-};
-
-const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
-</script>
 
 <!-- <style scoped>
 #hero {
