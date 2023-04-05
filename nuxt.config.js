@@ -1,16 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     typescript: false,
-    ssr: false,
 
-    css: ['primevue/resources/primevue.min.css', 'primeicons/primeicons.css', '@/assets/styles.scss', '/node_modules/primeicons/primeicons.css', '@/assets/demo/styles/flags/flags.css'],
-    build: {
-        transpile: ['primevue']
-    },
     app: {
         head: {
             title: 'Sakai Vue',
-
             link: [
                 {
                     id: 'theme-css',
@@ -20,6 +14,9 @@ export default defineNuxtConfig({
                 }
             ]
         }
+    },
+    build: {
+        transpile: ['primevue']
     },
     script: [
         {
@@ -36,5 +33,6 @@ export default defineNuxtConfig({
               gtag('config', 'UA-93461466-1');
           `
         }
-    ]
+    ],
+    css: ['primeicons/primeicons.css', 'primeflex/primeflex.scss', 'primevue/resources/primevue.min.css', '@/assets/styles.scss']
 });
