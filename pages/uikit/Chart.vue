@@ -1,12 +1,13 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useLayout } from '@/layouts/composables/layout';
 
 const { layoutConfig } = useLayout();
-let documentStyle = getComputedStyle(document.documentElement);
-let textColor = documentStyle.getPropertyValue('--text-color');
-let textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-let surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+let documentStyle = ref(null);
+let textColor = ref(null);
+let textColorSecondary = ref(null);
+let surfaceBorder = ref(null);
 
 const lineData = ref(null);
 const pieData = ref(null);
@@ -21,10 +22,10 @@ const barOptions = ref(null);
 const radarOptions = ref(null);
 
 const setColorOptions = () => {
-    documentStyle = getComputedStyle(document.documentElement);
-    textColor = documentStyle.getPropertyValue('--text-color');
-    textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    documentStyle.value = getComputedStyle(document.documentElement);
+    textColor.value = documentStyle.value.getPropertyValue('--text-color');
+    textColorSecondary.value = documentStyle.value.getPropertyValue('--text-color-secondary');
+    surfaceBorder.value = documentStyle.value.getPropertyValue('--surface-border');
 };
 
 const setChart = () => {
@@ -33,14 +34,14 @@ const setChart = () => {
         datasets: [
             {
                 label: 'My First dataset',
-                backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                borderColor: documentStyle.getPropertyValue('--primary-500'),
+                backgroundColor: documentStyle.value.getPropertyValue('--primary-500'),
+                borderColor: documentStyle.value.getPropertyValue('--primary-500'),
                 data: [65, 59, 80, 81, 56, 55, 40]
             },
             {
                 label: 'My Second dataset',
-                backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                borderColor: documentStyle.getPropertyValue('--primary-200'),
+                backgroundColor: documentStyle.value.getPropertyValue('--primary-200'),
+                borderColor: documentStyle.value.getPropertyValue('--primary-200'),
                 data: [28, 48, 40, 19, 86, 27, 90]
             }
         ]
@@ -83,8 +84,8 @@ const setChart = () => {
         datasets: [
             {
                 data: [540, 325, 702],
-                backgroundColor: [documentStyle.getPropertyValue('--indigo-500'), documentStyle.getPropertyValue('--purple-500'), documentStyle.getPropertyValue('--teal-500')],
-                hoverBackgroundColor: [documentStyle.getPropertyValue('--indigo-400'), documentStyle.getPropertyValue('--purple-400'), documentStyle.getPropertyValue('--teal-400')]
+                backgroundColor: [documentStyle.value.getPropertyValue('--indigo-500'), documentStyle.value.getPropertyValue('--purple-500'), documentStyle.value.getPropertyValue('--teal-500')],
+                hoverBackgroundColor: [documentStyle.value.getPropertyValue('--indigo-400'), documentStyle.value.getPropertyValue('--purple-400'), documentStyle.value.getPropertyValue('--teal-400')]
             }
         ]
     };
@@ -107,16 +108,16 @@ const setChart = () => {
                 label: 'First Dataset',
                 data: [65, 59, 80, 81, 56, 55, 40],
                 fill: false,
-                backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                borderColor: documentStyle.getPropertyValue('--primary-500'),
+                backgroundColor: documentStyle.value.getPropertyValue('--primary-500'),
+                borderColor: documentStyle.value.getPropertyValue('--primary-500'),
                 tension: 0.4
             },
             {
                 label: 'Second Dataset',
                 data: [28, 48, 40, 19, 86, 27, 90],
                 fill: false,
-                backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                borderColor: documentStyle.getPropertyValue('--primary-200'),
+                backgroundColor: documentStyle.value.getPropertyValue('--primary-200'),
+                borderColor: documentStyle.value.getPropertyValue('--primary-200'),
                 tension: 0.4
             }
         ]
@@ -156,7 +157,7 @@ const setChart = () => {
         datasets: [
             {
                 data: [11, 16, 7, 3],
-                backgroundColor: [documentStyle.getPropertyValue('--indigo-500'), documentStyle.getPropertyValue('--purple-500'), documentStyle.getPropertyValue('--teal-500'), documentStyle.getPropertyValue('--orange-500')],
+                backgroundColor: [documentStyle.value.getPropertyValue('--indigo-500'), documentStyle.value.getPropertyValue('--purple-500'), documentStyle.value.getPropertyValue('--teal-500'), documentStyle.value.getPropertyValue('--orange-500')],
                 label: 'My dataset'
             }
         ],
@@ -185,20 +186,20 @@ const setChart = () => {
         datasets: [
             {
                 label: 'My First dataset',
-                borderColor: documentStyle.getPropertyValue('--indigo-400'),
-                pointBackgroundColor: documentStyle.getPropertyValue('--indigo-400'),
-                pointBorderColor: documentStyle.getPropertyValue('--indigo-400'),
+                borderColor: documentStyle.value.getPropertyValue('--indigo-400'),
+                pointBackgroundColor: documentStyle.value.getPropertyValue('--indigo-400'),
+                pointBorderColor: documentStyle.value.getPropertyValue('--indigo-400'),
                 pointHoverBackgroundColor: textColor,
-                pointHoverBorderColor: documentStyle.getPropertyValue('--indigo-400'),
+                pointHoverBorderColor: documentStyle.value.getPropertyValue('--indigo-400'),
                 data: [65, 59, 90, 81, 56, 55, 40]
             },
             {
                 label: 'My Second dataset',
-                borderColor: documentStyle.getPropertyValue('--purple-400'),
-                pointBackgroundColor: documentStyle.getPropertyValue('--purple-400'),
-                pointBorderColor: documentStyle.getPropertyValue('--purple-400'),
+                borderColor: documentStyle.value.getPropertyValue('--purple-400'),
+                pointBackgroundColor: documentStyle.value.getPropertyValue('--purple-400'),
+                pointBorderColor: documentStyle.value.getPropertyValue('--purple-400'),
                 pointHoverBackgroundColor: textColor,
-                pointHoverBorderColor: documentStyle.getPropertyValue('--purple-400'),
+                pointHoverBorderColor: documentStyle.value.getPropertyValue('--purple-400'),
                 data: [28, 48, 40, 19, 96, 27, 100]
             }
         ]
@@ -222,14 +223,15 @@ const setChart = () => {
     };
 };
 
-watch(
-    layoutConfig.theme,
-    () => {
-        setColorOptions();
-        setChart();
-    },
-    { immediate: true }
-);
+onMounted(() => {
+    setColorOptions();
+    setChart();
+});
+
+watch(layoutConfig.theme, () => {
+    setColorOptions();
+    setChart();
+});
 </script>
 
 <template>
