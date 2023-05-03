@@ -190,7 +190,7 @@ const model = ref([
             {
                 label: 'View Source',
                 icon: 'pi pi-fw pi-search',
-                url: 'https://github.com/primefaces/sakai-vue',
+                url: 'https://github.com/primefaces/sakai-nuxt',
                 target: '_blank'
             }
         ]
