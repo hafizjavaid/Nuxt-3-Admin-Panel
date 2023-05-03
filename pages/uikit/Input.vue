@@ -4,9 +4,9 @@ import { NodeService } from '@/service/NodeService';
 import { onMounted, ref } from 'vue';
 
 const floatValue = ref(null);
-const autoValue = ref(null);
-const selectedAutoValue = ref(null);
-const autoFilteredValue = ref([]);
+const countries = ref();
+const selectedCountry = ref();
+const filteredCountries = ref();
 const calendarValue = ref(null);
 const inputNumberValue = ref(null);
 const chipsValue = ref(null);
@@ -57,16 +57,16 @@ const treeSelectNodes = ref(null);
 const selectedNode = ref(null);
 
 onMounted(() => {
-    CountryService.getCountries().then((data) => (autoValue.value = data));
+    CountryService.getCountries().then((data) => (countries.value = data));
     NodeService.getTreeNodes().then((data) => (treeSelectNodes.value = data));
 });
 
 const searchCountry = (event) => {
     setTimeout(() => {
         if (!event.query.trim().length) {
-            autoFilteredValue.value = [...autoValue.value];
+            filteredCountries.value = [...countries.value];
         } else {
-            autoFilteredValue.value = autoValue.value.filter((country) => {
+            filteredCountries.value = countries.value.filter((country) => {
                 return country.name.toLowerCase().startsWith(event.query.toLowerCase());
             });
         }
@@ -123,7 +123,7 @@ const searchCountry = (event) => {
                 <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
 
                 <h5>AutoComplete</h5>
-                <AutoComplete id="dd" v-model="selectedAutoValue" placeholder="Search" :dropdown="true" :multiple="true" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
+                <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="searchCountry" multiple />
 
                 <h5>Calendar</h5>
                 <Calendar v-model="calendarValue" :showIcon="true" :showButtonBar="true"></Calendar>

@@ -2,7 +2,6 @@
 import { CountryService } from '@/service/CountryService';
 import { onMounted, ref } from 'vue';
 
-const countries = ref([]);
 const cities = ref([
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },
@@ -10,7 +9,8 @@ const cities = ref([
     { name: 'Istanbul', code: 'IST' },
     { name: 'Paris', code: 'PRS' }
 ]);
-const filteredCountries = ref(null);
+const countries = ref();
+const filteredCountries = ref();
 const value1 = ref(null);
 const value2 = ref(null);
 const value3 = ref(null);
@@ -27,19 +27,15 @@ onMounted(() => {
 });
 
 const searchCountry = (event) => {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    const filtered = [];
-    const query = event.query;
-
-    for (let i = 0; i < countries.value.length; i++) {
-        const country = countries.value[i];
-
-        if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-            filtered.push(country);
+    setTimeout(() => {
+        if (!event.query.trim().length) {
+            filteredCountries.value = [...countries.value];
+        } else {
+            filteredCountries.value = countries.value.filter((country) => {
+                return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+            });
         }
-    }
-
-    filteredCountries.value = filtered;
+    }, 250);
 };
 </script>
 
@@ -55,7 +51,7 @@ const searchCountry = (event) => {
             </div>
             <div class="field col-12 md:col-4">
                 <span class="p-float-label">
-                    <AutoComplete id="autocomplete" v-model="value2" :suggestions="filteredCountries" @complete="searchCountry($event)" field="name"></AutoComplete>
+                    <AutoComplete id="autocomplete" v-model="value2" optionLabel="name" :suggestions="filteredCountries" @complete="searchCountry" />
                     <label for="autocomplete">AutoComplete</label>
                 </span>
             </div>
