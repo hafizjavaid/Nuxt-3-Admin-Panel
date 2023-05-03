@@ -1,8 +1,4 @@
 <script setup>
-import RadioButton from 'primevue/radiobutton';
-import Button from 'primevue/button';
-import InputSwitch from 'primevue/inputswitch';
-import Sidebar from 'primevue/sidebar';
 import { ref } from 'vue';
 import { useLayout } from './composables/layout';
 defineProps({
@@ -55,14 +51,14 @@ const applyScale = () => {
         <i class="pi pi-cog"></i>
     </button>
 
-    <Sidebar v-model:visible="visible" position="right" :transitionOptions="'.3s cubic-bezier(0, 0, 0.2, 1)'" class="layout-config-sidebar w-20rem">
+    <Sidebar v-model:visible="visible" position="right" class="layout-config-sidebar w-20rem">
         <h5>Scale</h5>
         <div class="flex align-items-center">
             <Button icon="pi pi-minus" type="button" @click="decrementScale()" class="p-button-text p-button-rounded w-2rem h-2rem mr-2" :disabled="layoutConfig.scale.value === scales[0]"></Button>
             <div class="flex gap-2 align-items-center">
-                <i v-for="s in scales" :key="s" class="pi pi-circle-fill text-300" :class="{ 'text-primary-500': s === layoutConfig.scale.value }"></i>
+                <i v-for="scale in scales" :key="scale" class="pi pi-circle-fill text-300" :class="{ 'text-primary-500': scale === layoutConfig.scale.value }"></i>
             </div>
-            <Button icon="pi pi-plus" type="button" pButton @click="incrementScale()" class="p-button-text p-button-rounded w-2rem h-2rem ml-2" :disabled="layoutConfig.scale.value === scales[scales.length - 1]"></Button>
+            <Button icon="pi pi-plus" type="button" @click="incrementScale()" class="p-button-text p-button-rounded w-2rem h-2rem ml-2" :disabled="layoutConfig.scale.value === scales[scales.length - 1]"></Button>
         </div>
 
         <template v-if="!simple">
