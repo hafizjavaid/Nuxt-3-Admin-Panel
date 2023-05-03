@@ -252,83 +252,15 @@ const load = (index) => {
     }
 }
 
-.template-button .p-button.twitter {
-    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #fff;
-    border-color: var(--blue-500);
-}
-.template-button .p-button.twitter:hover {
-    background-position: left bottom;
-}
-.template-button .p-button.twitter i {
-    background-color: var(--blue-500);
-}
-.template-button .p-button.twitter:focus {
-    box-shadow: 0 0 0 1px var(--blue-200);
-}
-.template-button .p-button.slack {
-    background: linear-gradient(to left, var(--orange-400) 50%, var(--orange-500) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #fff;
-    border-color: var(--orange-500);
-}
-.template-button .p-button.slack:hover {
-    background-position: left bottom;
-}
-.template-button .p-button.slack i {
-    background-color: var(--orange-500);
-}
-.template-button .p-button.slack:focus {
-    box-shadow: 0 0 0 1px var(--orange-200);
-}
-.template-button .p-button.amazon {
-    background: linear-gradient(to left, var(--yellow-400) 50%, var(--yellow-500) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #000;
-    border-color: var(--yellow-500);
-}
-.template-button .p-button.amazon:hover {
-    background-position: left bottom;
-}
-.template-button .p-button.amazon i {
-    background-color: var(--yellow-500);
-}
-.template-button .p-button.amazon:focus {
-    box-shadow: 0 0 0 1px var(--yellow-200);
-}
-.template-button .p-button.discord {
-    background: linear-gradient(to left, var(--bluegray-700) 50%, var(--bluegray-800) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #fff;
-    border-color: var(--bluegray-800);
-}
-.template-button .p-button.discord:hover {
-    background-position: left bottom;
-}
-.template-button .p-button.discord i {
-    background-color: var(--bluegray-800);
-}
-.template-button .p-button.discord:focus {
-    box-shadow: 0 0 0 1px var(--bluegray-500);
-}
 @media screen and (max-width: 960px) {
-    -button .p-button {
+    button .p-button {
         margin-bottom: 0.5rem;
     }
-    -button .p-button:not(.p-button-icon-only) {
+    button .p-button:not(.p-button-icon-only) {
         display: flex;
         flex-wrap: wrap;
     }
-    -button .p-buttonset .p-button {
+    button .p-buttonset .p-button {
         margin-bottom: 0;
     }
 }
