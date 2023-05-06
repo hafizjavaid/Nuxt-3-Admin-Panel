@@ -5,30 +5,35 @@
                 <h3>Current Version</h3>
                 <p>Nuxt 3 and PrimeVue 3</p>
 
-                <h5>Getting Started</h5>
+                <h5>Installation</h5>
                 <p>
-                    Sakai is an application template for Vue based on the <a href="https://nuxt.com/" class="font-medium text-primary hover:underline">Nuxt 3</a>, the recommended way to start a <strong>Vite-powered</strong> Vue
-                    projects. To get started, clone the <a href="https://github.com/primefaces/sakai-vue" class="font-medium">repository</a> from GitHub and install the dependencies with npm or yarn.
+                    Sakai is an application template for Vue based on the <a href="https://nuxtjs.org" class="font-medium text-primary hover:underline">Nuxt 3</a>. To get started, clone the <a href="https://github.com/primefaces/sakai-nuxt" class="font-medium text-primary hover:underline">repository</a> from GitHub and install the dependencies with npm or yarn.
                 </p>
-                <CodeHighlight> npm install </CodeHighlight>
+                <CodeHighlight>npm install</CodeHighlight>
 
-                or
+                <h6>Development</h6>
+                <p>Start the development server on <span class="font-medium bg-primary-100 text-primary-900 border-round text-sm px-2 py-1">http://localhost:3000/</span>.</p>
+                <CodeHighlight>npm run dev</CodeHighlight>
 
-                <CodeHighlight> yarn </CodeHighlight>
+                <h6>Production</h6>
+                <p>Build the application for production.</p>
+                <CodeHighlight>npm run build</CodeHighlight>
 
-                <p>Next step is running the application using the serve script and navigate to <i>http://localhost:3000/</i> to view the application. That is it, you may now start with the development of your application using the Sakai template.</p>
+                <h6>Preview</h6>
+                <p>Locally preview production build.</p>
+                <CodeHighlight>npm run preview</CodeHighlight>
 
-                <CodeHighlight> npm run dev </CodeHighlight>
+                <p>Check out the <a class="font-medium text-primary hover:underline" href="https://nuxt.com/docs/getting-started/deployment">deployment documentation</a> for more information.</p>
 
                 <h5>Structure</h5>
-                <p>Sakai consists of a couple folders, demos and layout have been separated so that you can easily remove what is not necessary for your application.</p>
+                <p>Sakai consists of a couple folders, demos and layout have been separated so that you can easily use the necessary parts when integrating with an existing Nuxt app.</p>
                 <ul class="line-height-3">
-                    <li><span class="text-primary font-medium">layout</span>: Main layout files, needs to be present</li>
+                    <li><span class="text-primary font-medium">layouts</span>: Main layout files, required</li>
                     <li><span class="text-primary font-medium">pages</span>: Demo pages</li>
                     <li><span class="text-primary font-medium">public/demo</span>: Assets used in demos</li>
-                    <li><span class="text-primary font-medium">public/layout</span>: Assets used in layout</li>
+                    <li><span class="text-primary font-medium">public/layout</span>: Assets used in layout, required</li>
                     <li><span class="text-primary font-medium">assets/demo</span>: Styles used in demos</li>
-                    <li><span class="text-primary font-medium">assets/layout</span>: SCSS files of the main layout</li>
+                    <li><span class="text-primary font-medium">assets/layout</span>: SCSS files of the main layout, required</li>
                 </ul>
 
                 <h5>Menu</h5>
@@ -38,9 +43,9 @@
                 <p>Sakai theming is based on the PrimeVue theme being used. Default theme is <b>lara-light-indigo</b>.</p>
 
                 <h5>SASS Variables</h5>
-                <p>In case you&apos;d like to customize the main layout variables, open <b>_variables.scss</b> file under layout folder. Saving the changes will be reflected instantly at your browser.</p>
+                <p>In case you would like to customize the main layout variables, open <b>_variables.scss</b> file under layout folder. Saving the changes will be reflected instantly at your browser.</p>
 
-                <h6>layout/_variables.scss</h6>
+                <h6>assets/layout/styles/layout/_variables.scss</h6>
                 <CodeHighlight>
                     /* General */
                     <br />
@@ -54,22 +59,3 @@
         </div>
     </div>
 </template>
-
-<style lang="scss" scoped>
-@media screen and (max-width: 991px) {
-    .video-container {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 56.25%;
-
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
-</style>
