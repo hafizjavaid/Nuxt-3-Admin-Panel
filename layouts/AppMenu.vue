@@ -55,7 +55,7 @@ const model = ref([
             {
                 label: 'Free Blocks',
                 icon: 'pi pi-fw pi-eye',
-                to: '/utilities/blocks',
+                to: '/blocks',
                 badge: 'NEW'
             },
             {
@@ -185,7 +185,7 @@ const model = ref([
             {
                 label: 'Documentation',
                 icon: 'pi pi-fw pi-question',
-                to: '/utilities/documentation'
+                to: '/documentation'
             },
             {
                 label: 'View Source',
