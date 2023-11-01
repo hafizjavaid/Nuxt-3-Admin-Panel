@@ -1,9 +1,7 @@
 import { toRefs, reactive, computed } from 'vue';
 
 const layoutConfig = reactive({
-    ripple: true,
     darkTheme: false,
-    inputStyle: 'outlined',
     menuMode: 'static',
     theme: 'lara-light-indigo',
     scale: 14,

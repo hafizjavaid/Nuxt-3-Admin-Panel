@@ -1,12 +1,19 @@
 <script setup>
 import { ref } from 'vue';
+import { usePrimeVue } from 'primevue/config';
 import { useLayout } from './composables/layout';
+
 defineProps({
     simple: {
         type: Boolean,
         default: false
     }
 });
+
+const $primevue = usePrimeVue();
+const rippleActive = computed(() => $primevue.config.ripple);
+const inputStyle = computed(() => $primevue.config.inputStyle);
+
 const scales = ref([12, 13, 14, 15, 16]);
 const visible = ref(false);
 const { changeThemeSettings, setScale, layoutConfig } = useLayout();
@@ -44,6 +51,14 @@ const incrementScale = () => {
 const applyScale = () => {
     document.documentElement.style.fontSize = layoutConfig.scale.value + 'px';
 };
+
+const onInputStyleChange = (value) => {
+    $primevue.config.inputStyle = value;
+};
+
+const onRippleChange = (value) => {
+    $primevue.config.ripple = value;
+};
 </script>
 
 <template>
@@ -80,17 +95,17 @@ const applyScale = () => {
             <h5>Input Style</h5>
             <div class="flex">
                 <div class="field-radiobutton flex-1">
-                    <RadioButton v-model="layoutConfig.inputStyle.value" name="inputStyle" value="outlined" inputId="outlined_input"></RadioButton>
+                    <RadioButton :modelValue="inputStyle" name="inputStyle" value="outlined" inputId="outlined_input" @update:modelValue="onInputStyleChange"></RadioButton>
                     <label for="outlined_input">Outlined</label>
                 </div>
                 <div class="field-radiobutton flex-1">
-                    <RadioButton v-model="layoutConfig.inputStyle.value" name="inputStyle" value="filled" inputId="filled_input"></RadioButton>
+                    <RadioButton :modelValue="inputStyle" name="inputStyle" value="filled" inputId="filled_input" @update:modelValue="onInputStyleChange"></RadioButton>
                     <label for="filled_input">Filled</label>
                 </div>
             </div>
 
             <h5>Ripple Effect</h5>
-            <InputSwitch v-model="layoutConfig.ripple.value"></InputSwitch>
+            <InputSwitch :modelValue="rippleActive" @update:modelValue="onRippleChange"></InputSwitch>
         </template>
 
         <h5>Bootstrap</h5>

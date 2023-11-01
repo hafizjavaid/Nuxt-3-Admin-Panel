@@ -1,10 +1,13 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
+import { usePrimeVue } from 'primevue/config';
 import AppTopbar from './AppTopbar.vue';
 import AppFooter from './AppFooter.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppConfig from './AppConfig.vue';
 import { useLayout } from './composables/layout';
+
+const $primevue = usePrimeVue();
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 const outsideClickListener = ref(null);
 
@@ -24,8 +27,8 @@ const containerClass = computed(() => {
         'layout-static-inactive': layoutState.staticMenuDesktopInactive.value && layoutConfig.menuMode.value === 'static',
         'layout-overlay-active': layoutState.overlayMenuActive.value,
         'layout-mobile-active': layoutState.staticMenuMobileActive.value,
-        'p-input-filled': layoutConfig.inputStyle.value === 'filled',
-        'p-ripple-disabled': !layoutConfig.ripple.value
+        'p-input-filled': $primevue.config.inputStyle === 'filled',
+        'p-ripple-disabled': $primevue.config.ripple === false
     };
 });
 
