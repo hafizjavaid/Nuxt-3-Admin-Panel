@@ -15,6 +15,12 @@ export default defineNuxtConfig({
         }
     },
     modules: ['nuxt-primevue'],
+    primevue: {
+        options: { ripple: true },
+        components: {
+            exclude: ['Editor']
+        }
+    },
     script: [
         {
             strategy: 'lazyOnload',
