@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     typescript: false,
-
     app: {
         head: {
             title: 'Sakai Vue',
@@ -15,9 +14,7 @@ export default defineNuxtConfig({
             ]
         }
     },
-    build: {
-        transpile: ['primevue']
-    },
+    modules: ['nuxt-primevue'],
     script: [
         {
             strategy: 'lazyOnload',
@@ -27,11 +24,11 @@ export default defineNuxtConfig({
             id: 'ga-analytics',
             strategy: 'lazyOnload',
             children: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'UA-93461466-1');
-          `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'UA-93461466-1');
+            `
         }
     ],
     css: ['primeicons/primeicons.css', 'primeflex/primeflex.scss', 'primevue/resources/primevue.min.css', '@/assets/styles.scss']
