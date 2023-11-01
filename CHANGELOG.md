@@ -1,5 +1,16 @@
 # Changelog
 
-## 1.0.0 (2023-05-08)
+## 1.1.0 (2023-11-01)
 
--   The implementation of the Nuxt.js version of the Sakai-Vue project
+**Migration Guide**
+
+-   Update theme files.
+
+**Implemented New Features and Enhancements**
+
+-   Upgrade to PrimeVue 3.39.0
+-   nuxt-primevue module added
+
+**Fixed Bugs**
+
+-   ripple and inputstyle implementation fixes
