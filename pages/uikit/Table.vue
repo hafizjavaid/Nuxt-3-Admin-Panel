@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
-import { CustomerService } from '@/service/CustomerService';
-import { ProductService } from '@/service/ProductService';
+import CustomerService from '@/service/CustomerService';
+import ProductService from '@/service/ProductService';
+import { ref, onBeforeMount } from 'vue';
 
 const customer1 = ref(null);
 const customer2 = ref(null);
@@ -13,8 +13,8 @@ const loading2 = ref(null);
 const idFrozen = ref(false);
 const products = ref(null);
 const expandedRows = ref([]);
-const statuses = reactive(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
-const representatives = reactive([
+const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
+const representatives = ref([
     { name: 'Amy Elsner', image: 'amyelsner.png' },
     { name: 'Anna Fali', image: 'annafali.png' },
     { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
@@ -26,6 +26,9 @@ const representatives = reactive([
     { name: 'Stephen Shaw', image: 'stephenshaw.png' },
     { name: 'XuXue Feng', image: 'xuxuefeng.png' }
 ]);
+
+const customerService = new CustomerService();
+const productService = new ProductService();
 
 const getBadgeSeverity = (inventoryStatus) => {
     switch (inventoryStatus.toLowerCase()) {
@@ -58,6 +61,20 @@ const getSeverity = (status) => {
     }
 };
 
+onBeforeMount(() => {
+    productService.getProductsWithOrdersSmall().then((data) => (products.value = data));
+    customerService.getCustomersLarge().then((data) => {
+        customer1.value = data;
+        loading1.value = false;
+        customer1.value.forEach((customer) => (customer.date = new Date(customer.date)));
+    });
+    customerService.getCustomersLarge().then((data) => (customer2.value = data));
+    customerService.getCustomersMedium().then((data) => (customer3.value = data));
+    loading2.value = false;
+
+    initFilters1();
+});
+
 const initFilters1 = () => {
     filters1.value = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -72,40 +89,17 @@ const initFilters1 = () => {
     };
 };
 
-onMounted(() => {
-    ProductService.getProductsWithOrdersSmall().then((data) => (products.value = data));
-    CustomerService.getCustomersLarge().then((data) => {
-        customer1.value = getCustomers(data);
-        loading1.value = false;
-    });
-    CustomerService.getCustomersLarge().then((data) => (customer2.value = data));
-    CustomerService.getCustomersMedium().then((data) => (customer3.value = data));
-    loading2.value = false;
-});
-initFilters1();
-
-const clearFilter = () => {
+const clearFilter1 = () => {
     initFilters1();
 };
-
 const expandAll = () => {
-    expandedRows.value = products.value.filter((p) => p.id);
+    expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
 };
-
 const collapseAll = () => {
     expandedRows.value = null;
 };
-
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
-
-const getCustomers = (data) => {
-    return [...(data || [])].map((d) => {
-        d.date = new Date(d.date);
-
-        return d;
-    });
 };
 
 const formatDate = (value) => {
@@ -135,23 +129,25 @@ const calculateCustomerTotal = (name) => {
             <div class="card">
                 <h5>Filter Menu</h5>
                 <DataTable
-                    v-model:filters="filters1"
                     :value="customer1"
-                    paginator
-                    showGridlines
+                    :paginator="true"
                     :rows="10"
                     dataKey="id"
+                    :rowHover="true"
+                    v-model:filters="filters1"
                     filterDisplay="menu"
                     :loading="loading1"
+                    :filters="filters1"
                     :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']"
+                    showGridlines
                 >
                     <template #header>
-                        <div class="flex justify-content-between">
-                            <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter()" />
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search" />
-                                <InputText v-model="filters1['global'].value" placeholder="Keyword Search" />
-                            </span>
+                        <div class="flex justify-content-between flex-column sm:flex-row">
+                            <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined @click="clearFilter1()" />
+                            <IconField iconPosition="left">
+                                <InputIcon class="pi pi-search" />
+                                <InputText v-model="filters1['global'].value" placeholder="Keyword Search" style="width: 100%" />
+                            </IconField>
                         </div>
                     </template>
                     <template #empty> No customers found. </template>
@@ -161,27 +157,24 @@ const calculateCustomerTotal = (name) => {
                             {{ data.name }}
                         </template>
                         <template #filter="{ filterModel }">
-                            <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by name" />
+                            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name" />
                         </template>
                     </Column>
                     <Column header="Country" filterField="country.name" style="min-width: 12rem">
                         <template #body="{ data }">
                             <div class="flex align-items-center gap-2">
-                                <img alt="flag" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`flag flag-${data.country.code}`" style="width: 24px" />
+                                <img alt="flag" src="/demo/images/flag/flag_placeholder.png" :class="`flag flag-${data.country.code}`" style="width: 24px" />
                                 <span>{{ data.country.name }}</span>
                             </div>
                         </template>
                         <template #filter="{ filterModel }">
-                            <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by country" />
+                            <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by country" />
                         </template>
                         <template #filterclear="{ filterCallback }">
                             <Button type="button" icon="pi pi-times" @click="filterCallback()" severity="secondary"></Button>
                         </template>
                         <template #filterapply="{ filterCallback }">
                             <Button type="button" icon="pi pi-check" @click="filterCallback()" severity="success"></Button>
-                        </template>
-                        <template #filterfooter>
-                            <div class="px-3 pt-0 pb-3 text-center">Customized Buttons</div>
                         </template>
                     </Column>
                     <Column header="Agent" filterField="representative" :showFilterMatchModes="false" :filterMenuStyle="{ width: '14rem' }" style="min-width: 14rem">
@@ -192,11 +185,12 @@ const calculateCustomerTotal = (name) => {
                             </div>
                         </template>
                         <template #filter="{ filterModel }">
+                            <div class="mb-3 text-bold">Agent Picker</div>
                             <MultiSelect v-model="filterModel.value" :options="representatives" optionLabel="name" placeholder="Any" class="p-column-filter">
                                 <template #option="slotProps">
-                                    <div class="flex align-items-center gap-2">
-                                        <img :alt="slotProps.option.name" :src="`https://primefaces.org/cdn/primevue/images/avatar/${slotProps.option.image}`" style="width: 32px" />
-                                        <span>{{ slotProps.option.name }}</span>
+                                    <div class="p-multiselect-representative-option">
+                                        <img :alt="slotProps.option.name" :src="'/demo/images/avatar/' + slotProps.option.image" width="32" style="vertical-align: middle" />
+                                        <span style="margin-left: 0.5em; vertical-align: middle" class="image-text">{{ slotProps.option.name }}</span>
                                     </div>
                                 </template>
                             </MultiSelect>
@@ -207,7 +201,7 @@ const calculateCustomerTotal = (name) => {
                             {{ formatDate(data.date) }}
                         </template>
                         <template #filter="{ filterModel }">
-                            <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />
+                            <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
                         </template>
                     </Column>
                     <Column header="Balance" filterField="balance" dataType="numeric" style="min-width: 10rem">
@@ -225,7 +219,7 @@ const calculateCustomerTotal = (name) => {
                         <template #filter="{ filterModel }">
                             <Dropdown v-model="filterModel.value" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
                                 <template #value="slotProps">
-                                    <Tag :severity="getSeverity(slotProps.value)" v-if="slotProps.value">{{ slotProps.value.toUpperCase() }} </Tag>
+                                    <Tag :severity="getSeverity(slotProps.value)" v-if="slotProps.value">{{ slotProps.value }} </Tag>
                                     <span v-else>{{ slotProps.placeholder }}</span>
                                 </template>
                                 <template #option="slotProps">
@@ -236,10 +230,10 @@ const calculateCustomerTotal = (name) => {
                     </Column>
                     <Column field="activity" header="Activity" :showFilterMatchModes="false" style="min-width: 12rem">
                         <template #body="{ data }">
-                            <ProgressBar :value="data.activity" :showValue="false" style="height: 6px"></ProgressBar>
+                            <ProgressBar :value="data.activity" :showValue="false" style="height: 0.5rem"></ProgressBar>
                         </template>
                         <template #filter="{ filterModel }">
-                            <Slider v-model="filterModel.value" range class="m-3"></Slider>
+                            <Slider v-model="filterModel.value" :range="true" class="m-3"></Slider>
                             <div class="flex align-items-center justify-content-between px-2">
                                 <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
                                 <span>{{ filterModel.value ? filterModel.value[1] : 100 }}</span>
@@ -248,11 +242,10 @@ const calculateCustomerTotal = (name) => {
                     </Column>
                     <Column field="verified" header="Verified" dataType="boolean" bodyClass="text-center" style="min-width: 8rem">
                         <template #body="{ data }">
-                            <i class="pi" :class="{ 'pi-check-circle text-green-500 ': data.verified, 'pi-times-circle text-red-500': !data.verified }"></i>
+                            <i class="pi" :class="{ 'text-green-500 pi-check-circle': data.verified, 'text-pink-500 pi-times-circle': !data.verified }"></i>
                         </template>
                         <template #filter="{ filterModel }">
-                            <label for="verified-filter" class="font-bold"> Verified </label>
-                            <TriStateCheckbox v-model="filterModel.value" inputId="verified-filter" />
+                            <TriStateCheckbox v-model="filterModel.value" />
                         </template>
                     </Column>
                 </DataTable>

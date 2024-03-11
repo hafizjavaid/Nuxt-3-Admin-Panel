@@ -1,14 +1,13 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
-import { usePrimeVue } from 'primevue/config';
 import AppTopbar from './AppTopbar.vue';
 import AppFooter from './AppFooter.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppConfig from './AppConfig.vue';
 import { useLayout } from './composables/layout';
 
-const $primevue = usePrimeVue();
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
+
 const outsideClickListener = ref(null);
 
 watch(isSidebarActive, (newVal) => {
@@ -18,6 +17,7 @@ watch(isSidebarActive, (newVal) => {
         unbindOutsideClickListener();
     }
 });
+
 const containerClass = computed(() => {
     return {
         'layout-theme-light': layoutConfig.darkTheme.value === 'light',
@@ -27,11 +27,9 @@ const containerClass = computed(() => {
         'layout-static-inactive': layoutState.staticMenuDesktopInactive.value && layoutConfig.menuMode.value === 'static',
         'layout-overlay-active': layoutState.overlayMenuActive.value,
         'layout-mobile-active': layoutState.staticMenuMobileActive.value,
-        'p-input-filled': $primevue.config.inputStyle === 'filled',
-        'p-ripple-disabled': $primevue.config.ripple === false
+        'p-ripple-disabled': layoutConfig.ripple.value === false
     };
 });
-
 const bindOutsideClickListener = () => {
     if (!outsideClickListener.value) {
         outsideClickListener.value = (event) => {
@@ -41,18 +39,15 @@ const bindOutsideClickListener = () => {
                 layoutState.menuHoverActive.value = false;
             }
         };
-
         document.addEventListener('click', outsideClickListener.value);
     }
 };
-
 const unbindOutsideClickListener = () => {
     if (outsideClickListener.value) {
         document.removeEventListener('click', outsideClickListener);
         outsideClickListener.value = null;
     }
 };
-
 const isOutsideClicked = (event) => {
     const sidebarEl = document.querySelector('.layout-sidebar');
     const topbarEl = document.querySelector('.layout-menu-button');
@@ -76,6 +71,7 @@ const isOutsideClicked = (event) => {
         <app-config></app-config>
         <div class="layout-mask"></div>
     </div>
+    <Toast />
 </template>
 
 <style lang="scss" scoped></style>

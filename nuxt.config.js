@@ -9,7 +9,7 @@ export default defineNuxtConfig({
                     id: 'theme-css',
                     rel: 'stylesheet',
                     type: 'text/css',
-                    href: '/themes/lara-light-indigo/theme.css'
+                    href: '/themes/aura-light-green/theme.css'
                 }
             ]
         }

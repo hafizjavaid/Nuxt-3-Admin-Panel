@@ -1,12 +1,12 @@
 <script setup>
-import { CountryService } from '@/service/CountryService';
-import { NodeService } from '@/service/NodeService';
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import CountryService from '@/service/CountryService';
+import NodeService from '@/service/NodeService';
 
 const floatValue = ref(null);
-const countries = ref();
-const selectedCountry = ref();
-const filteredCountries = ref();
+const autoValue = ref(null);
+const selectedAutoValue = ref(null);
+const autoFilteredValue = ref([]);
 const calendarValue = ref(null);
 const inputNumberValue = ref(null);
 const chipsValue = ref(null);
@@ -55,18 +55,20 @@ const knobValue = ref(50);
 const inputGroupValue = ref(false);
 const treeSelectNodes = ref(null);
 const selectedNode = ref(null);
+const countryService = new CountryService();
+const nodeService = new NodeService();
 
 onMounted(() => {
-    CountryService.getCountries().then((data) => (countries.value = data));
-    NodeService.getTreeNodes().then((data) => (treeSelectNodes.value = data));
+    countryService.getCountries().then((data) => (autoValue.value = data));
+    nodeService.getTreeNodes().then((data) => (treeSelectNodes.value = data));
 });
 
 const searchCountry = (event) => {
     setTimeout(() => {
         if (!event.query.trim().length) {
-            filteredCountries.value = [...countries.value];
+            autoFilteredValue.value = [...autoValue.value];
         } else {
-            filteredCountries.value = countries.value.filter((country) => {
+            autoFilteredValue.value = autoValue.value.filter((country) => {
                 return country.name.toLowerCase().startsWith(event.query.toLowerCase());
             });
         }
@@ -86,47 +88,40 @@ const searchCountry = (event) => {
                         <InputText type="text" placeholder="Disabled" :disabled="true"></InputText>
                     </div>
                     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                        <InputText type="text" placeholder="Invalid" class="p-invalid" />
+                        <InputText type="text" placeholder="Invalid" invalid />
                     </div>
                 </div>
 
                 <h5>Icons</h5>
                 <div class="grid formgrid">
-                    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-user" />
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <IconField>
+                            <InputIcon class="pi pi-user" />
                             <InputText type="text" placeholder="Username" />
-                        </span>
+                        </IconField>
                     </div>
-                    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                        <span class="p-input-icon-right">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <IconField iconPosition="left">
                             <InputText type="text" placeholder="Search" />
-                            <i class="pi pi-search" />
-                        </span>
-                    </div>
-                    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                        <span class="p-input-icon-left p-input-icon-right">
-                            <i class="pi pi-user" />
-                            <InputText type="text" placeholder="Search" />
-                            <i class="pi pi-search" />
-                        </span>
+                            <InputIcon class="pi pi-search" />
+                        </IconField>
                     </div>
                 </div>
 
                 <h5>Float Label</h5>
-                <span class="p-float-label">
-                    <InputText id="username" v-model="floatValue" type="text" />
+                <FloatLabel>
+                    <InputText id="username" type="text" v-model="floatValue" />
                     <label for="username">Username</label>
-                </span>
+                </FloatLabel>
 
                 <h5>Textarea</h5>
                 <Textarea placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
 
                 <h5>AutoComplete</h5>
-                <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="searchCountry" multiple />
+                <AutoComplete placeholder="Search" id="dd" :dropdown="true" :multiple="true" v-model="selectedAutoValue" :suggestions="autoFilteredValue" @complete="searchCountry($event)" field="name" />
 
                 <h5>Calendar</h5>
-                <Calendar v-model="calendarValue" :showIcon="true" :showButtonBar="true"></Calendar>
+                <Calendar :showIcon="true" :showButtonBar="true" v-model="calendarValue"></Calendar>
 
                 <h5>Spinner</h5>
                 <InputNumber v-model="inputNumberValue" showButtons mode="decimal"></InputNumber>
@@ -148,7 +143,7 @@ const searchCountry = (event) => {
                     </div>
                     <div class="col-12 md:col-6">
                         <h5>ColorPicker</h5>
-                        <ColorPicker v-model="colorValue" style="width: 2rem" />
+                        <ColorPicker style="width: 2rem" v-model="colorValue" />
                     </div>
                     <div class="col-12">
                         <h5>Knob</h5>
@@ -164,19 +159,19 @@ const searchCountry = (event) => {
                 <div class="grid">
                     <div class="col-12 md:col-4">
                         <div class="field-radiobutton mb-0">
-                            <RadioButton id="option1" v-model="radioValue" name="option" value="Chicago" />
+                            <RadioButton id="option1" name="option" value="Chicago" v-model="radioValue" />
                             <label for="option1">Chicago</label>
                         </div>
                     </div>
                     <div class="col-12 md:col-4">
                         <div class="field-radiobutton mb-0">
-                            <RadioButton id="option2" v-model="radioValue" name="option" value="Los Angeles" />
+                            <RadioButton id="option2" name="option" value="Los Angeles" v-model="radioValue" />
                             <label for="option2">Los Angeles</label>
                         </div>
                     </div>
                     <div class="col-12 md:col-4">
                         <div class="field-radiobutton mb-0">
-                            <RadioButton id="option3" v-model="radioValue" name="option" value="New York" />
+                            <RadioButton id="option3" name="option" value="New York" v-model="radioValue" />
                             <label for="option3">New York</label>
                         </div>
                     </div>
@@ -186,19 +181,19 @@ const searchCountry = (event) => {
                 <div class="grid">
                     <div class="col-12 md:col-4">
                         <div class="field-checkbox mb-0">
-                            <Checkbox id="checkOption1" v-model="checkboxValue" name="option" value="Chicago" />
+                            <Checkbox id="checkOption1" name="option" value="Chicago" v-model="checkboxValue" />
                             <label for="checkOption1">Chicago</label>
                         </div>
                     </div>
                     <div class="col-12 md:col-4">
                         <div class="field-checkbox mb-0">
-                            <Checkbox id="checkOption2" v-model="checkboxValue" name="option" value="Los Angeles" />
+                            <Checkbox id="checkOption2" name="option" value="Los Angeles" v-model="checkboxValue" />
                             <label for="checkOption2">Los Angeles</label>
                         </div>
                     </div>
                     <div class="col-12 md:col-4">
                         <div class="field-checkbox mb-0">
-                            <Checkbox id="checkOption3" v-model="checkboxValue" name="option" value="New York" />
+                            <Checkbox id="checkOption3" name="option" value="New York" v-model="checkboxValue" />
                             <label for="checkOption3">New York</label>
                         </div>
                     </div>
@@ -218,7 +213,7 @@ const searchCountry = (event) => {
                 <h5>MultiSelect</h5>
                 <MultiSelect v-model="multiselectValue" :options="multiselectValues" optionLabel="name" placeholder="Select Countries" :filter="true">
                     <template #value="slotProps">
-                        <div v-for="option of slotProps.value" :key="option.code" class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2">
+                        <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2" v-for="option of slotProps.value" :key="option.code">
                             <span :class="'mr-2 flag flag-' + option.code.toLowerCase()" style="width: 18px; height: 12px" />
                             <div>{{ option.name }}</div>
                         </div>
@@ -255,38 +250,42 @@ const searchCountry = (event) => {
                 <h5>Input Groups</h5>
                 <div class="grid p-fluid">
                     <div class="col-12 md:col-6">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon">
+                        <InputGroup>
+                            <InputGroupAddon>
                                 <i class="pi pi-user"></i>
-                            </span>
+                            </InputGroupAddon>
                             <InputText placeholder="Username" />
-                        </div>
+                        </InputGroup>
                     </div>
 
                     <div class="col-12 md:col-6">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-shopping-cart"></i></span>
-                            <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
-                            <InputText placeholder="Price" />
-                            <span class="p-inputgroup-addon">$</span>
-                            <span class="p-inputgroup-addon">.00</span>
-                        </div>
+                        <InputGroup>
+                            <InputGroupAddon>
+                                <i class="pi pi-clock"></i>
+                            </InputGroupAddon>
+                            <InputGroupAddon>
+                                <i class="pi pi-star-fill"></i>
+                            </InputGroupAddon>
+                            <InputNumber placeholder="Price" />
+                            <InputGroupAddon>$</InputGroupAddon>
+                            <InputGroupAddon>.00</InputGroupAddon>
+                        </InputGroup>
                     </div>
 
                     <div class="col-12 md:col-6">
-                        <div class="p-inputgroup">
+                        <InputGroup>
                             <Button label="Search" />
                             <InputText placeholder="Keyword" />
-                        </div>
+                        </InputGroup>
                     </div>
 
                     <div class="col-12 md:col-6">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon p-inputgroup-addon-checkbox">
+                        <InputGroup>
+                            <InputGroupAddon>
                                 <Checkbox v-model="inputGroupValue" :binary="true" />
-                            </span>
+                            </InputGroupAddon>
                             <InputText placeholder="Confirm" />
-                        </div>
+                        </InputGroup>
                     </div>
                 </div>
             </div>
