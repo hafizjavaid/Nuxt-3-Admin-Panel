@@ -1,9 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import 'dotenv/config';
+import { defineNuxtConfig } from 'nuxt/config';
+
 export default defineNuxtConfig({
-    typescript: false,
+    server: {
+    host: '0.0.0.0',
+    port: 3000
+  },
+  typescript: {
+    strict: true
+  },
     app: {
         head: {
-            title: 'Sakai Vue',
+            title: 'ไก่ชนข่าว',
             link: [
                 {
                     id: 'theme-css',
@@ -24,7 +33,8 @@ export default defineNuxtConfig({
     script: [
         {
             strategy: 'lazyOnload',
-            src: 'https://www.googletagmanager.com/gtag/js?id=UA-93461466-1'
+            async: true,
+            src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GA_MEASUREMENT_ID}`
         },
         {
             id: 'ga-analytics',
@@ -33,7 +43,7 @@ export default defineNuxtConfig({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'UA-93461466-1');
+                gtag('config', '${process.env.GA_MEASUREMENT_ID}');
             `
         }
     ],
