@@ -4,7 +4,7 @@ import { useLayout } from './composables/layout';
 import { useRouter } from 'vue-router';
 const { layoutConfig, onMenuToggle } = useLayout();
 const outsideClickListener = ref(null);
-const topbarMenuActive = ref(false);
+const topbarMenuActive = ref(true);
 const router = useRouter();
 
 onMounted(() => {
@@ -64,7 +64,7 @@ const isOutsideClicked = (event) => {
     <div class="layout-topbar">
         <router-link to="/" class="layout-topbar-logo">
             <img :src="logoUrl" alt="logo" />
-            <span>SAKAI</span>
+            <span>ข่าวไก่ชน</span>
         </router-link>
 
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
