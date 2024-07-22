@@ -1,6 +1,7 @@
 module.exports = {
     root: true,
     extends: ['plugin:nuxt/recommended', 'plugin:vue/vue3-essential', 'prettier'],
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest'
     },
