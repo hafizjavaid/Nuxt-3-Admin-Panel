@@ -18,7 +18,9 @@
         "mysql2": "^3.10.3",
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
-        "primevue": "^3.49.1"
+        "primevue": "^3.49.1",
+        "reflect-metadata": "^0.2.2",
+        "typeorm": "^0.3.20"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.18.9",

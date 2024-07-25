@@ -2,6 +2,8 @@
 import { db } from '../db';
 
 export default defineEventHandler(async (event) => {
-    const [rows] = await db.query('SELECT * FROM users');
+    const connection = await db.getConnection();
+    const [rows] = await connection.query('SELECT * FROM users');
+    connection.release();
     return rows;
 });
