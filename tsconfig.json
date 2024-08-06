@@ -1,20 +1,23 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "ESNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "moduleResolution": "Node",
     "strict": true,
     "jsx": "preserve",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-     "types": ["@types/node"],
+    "types": ["@types/node"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"]
-    }
+    },
+    "useDefineForClassFields": false // ปิดการใช้งาน useDefineForClassFields
   },
+  "include": ["server/**/*.ts"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }
