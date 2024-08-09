@@ -1,9 +1,7 @@
-import { Sequelize } from 'sequelize';
-import New from '@/server/models/news.model';
-
-export default defineEventHandler(async (event) => {
-    const result = await New.findAll({});
+// ตัวอย่าง middleware ที่ถูกต้อง
+export default defineEventHandler((event) => {
+    // ตรวจสอบและดำเนินการบางอย่าง
     return {
-        hello: 'Get all News'
-    };
+        hello: 'nuxt3'
+    }; // หรือส่งค่าที่เหมาะสม
 });

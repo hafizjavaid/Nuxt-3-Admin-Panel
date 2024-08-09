@@ -26,10 +26,10 @@ const User = dbInstance.define(
 );
 (async () => {
     try {
-        //await dbInstance.authenticate();
-        console.log('Connection has been established successfully.');
+        await dbInstance.authenticate();
+        console.log('Connection DB-User has been established successfully.');
 
-        await User.sync({ force: true });
+        await User.sync({ force: false });
         console.log('User table created.');
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
