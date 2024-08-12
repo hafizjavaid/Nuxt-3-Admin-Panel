@@ -21,6 +21,14 @@ const User = dbInstance.define(
             type: DataTypes.STRING,
             defaultValue: 'normal'
         }
+        // created: {
+        //     type: DataTypes.DATE,
+        //     defaultValue: DataTypes.NOW
+        // },
+        // updated: {
+        //     type: DataTypes.DATE,
+        //     defualtValue: DataTypes.NOW
+        // }
     },
     {}
 );
@@ -30,11 +38,8 @@ const User = dbInstance.define(
         console.log('Connection DB-User has been established successfully.');
 
         await User.sync({ force: false });
-        console.log('User table created.');
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
-    } finally {
-        await dbInstance.close();
     }
 })();
 export default User;

@@ -1,16 +1,22 @@
+import { uploadImage } from '~/server/services/upload-file-service';
 import { readBody } from 'h3';
-import { CreatedNewsDto } from '~/types/dtos/news/createdNews.dto';
+import { NewsDto } from '~/types/dtos/news/news.dto';
 import News from '@/server/models/news.model';
 
 export default defineEventHandler(async (event) => {
-    const body = await readBody<CreatedNewsDto>(event);
-    console.log(body);
+    const formData = await readMultipartFormData(event);
+    const file = formData?.find((x) => x.name === 'file');
+    const bodyRow = formData?.find((x) => x.name === 'body');
 
-    try {
-        const result = await News.create(body);
-        return { status: 201, data: result };
-    } catch (error) {
-        console.error(error);
-        return { status: 500, message: 'Internal Server Error', error: error.message };
+    if (!bodyRow) return { result: 'No data found', data: 'body is required' };
+    const body = bodyRow ? JSON.parse(bodyRow?.data.toString()) : null;
+    if (!body) return { result: 'No data found', data: 'body is required' };
+    const result = await News.create(body);
+    if (file) {
+        uploadImage(file, result);
     }
+    return {
+        status: result ? 'success' : 'found',
+        data: result
+    };
 });

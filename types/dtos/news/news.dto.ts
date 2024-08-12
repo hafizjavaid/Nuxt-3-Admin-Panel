@@ -1,4 +1,4 @@
-export type CreatedNewsDto = {
+export type NewsDto = {
     id: number;
     newsId: number; // Use camelCase for consistency
     languageId: string; // Use camelCase for consistency
@@ -12,6 +12,7 @@ export type CreatedNewsDto = {
     url: string;
     style: string;
     editorData: string; // Use camelCase for consistency
+    status: string;
     createdAt: date;
     updatedAt: date;
 };

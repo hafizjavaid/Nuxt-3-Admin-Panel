@@ -1,4 +1,7 @@
 export type registerDto = {
-    email string;
+    userName string;
     password string;
+    level string;
+    createdAt date;
+    updatedAt date;
 }
