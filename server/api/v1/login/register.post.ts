@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 export default defineEventHandler(async (event) => {
     const body = await readBody<registerDto>(event);
     body.password = await bcrypt.hash(body.password, 10);
+
     const userData = await User.findOne({
         where: {
             userName: body.userName

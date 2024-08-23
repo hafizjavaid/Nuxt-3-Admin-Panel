@@ -11,24 +11,52 @@ const User = dbInstance.define(
         },
         userName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         password: {
             type: DataTypes.STRING,
+            allowNull: true
+        },
+        email: {
+            type: DataTypes.STRING,
             allowNull: false
         },
-        level: {
+        phone: {
             type: DataTypes.STRING,
-            defaultValue: 'normal'
+            allowNull: false
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            defualtValue: DataTypes.NOW
+        },
+        is_admin: {
+            type: DataTypes.BOOLEAN,
+            defualtValue: false
+        },
+        is_shop: {
+            type: DataTypes.BOOLEAN,
+            defualtValue: false
+        },
+        picture: {
+            type: DataTypes.STRING,
+            defaultValue: false
+        },
+        gender: {
+            type: DataTypes.STRING,
+            defaultValue: true
+        },
+        email_verified: {
+            type: DataTypes.STRING,
+            defaultValue: false
+        },
+        is_editor: {
+            type: DataTypes.BOOLEAN,
+            defualtValue: false
         }
-        // created: {
-        //     type: DataTypes.DATE,
-        //     defaultValue: DataTypes.NOW
-        // },
-        // updated: {
-        //     type: DataTypes.DATE,
-        //     defualtValue: DataTypes.NOW
-        // }
     },
     {}
 );

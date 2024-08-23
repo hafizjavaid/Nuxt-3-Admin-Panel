@@ -1,7 +1,7 @@
 <script setup>
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
-import CustomerService from '@/service/CustomerService';
-import ProductService from '@/service/ProductService';
+import CustomerService from '../../services/CustomerService';
+import ProductService from '../../services/ProductService';
 import { ref, onBeforeMount } from 'vue';
 
 const customer1 = ref(null);

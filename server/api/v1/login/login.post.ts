@@ -9,8 +9,7 @@ export default defineEventHandler(async (event) => {
             userName: body.userName
         }
     });
-    console.log(userData);
-    // ตรวจสอบอีเมล
+
     if (body.userName !== userData?.get('userName')) {
         throw createError({
             status: 401,
@@ -18,20 +17,20 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    // ตรวจสอบรหัสผ่าน
     const passwordMatch = await bcrypt.compare(body.password, userData.password);
 
     if (!passwordMatch) {
         throw createError({
             status: 401,
-            message: 'Invalid Email or Password'
+            message: 'Invalid Username or Password'
         });
     }
     return {
         status: 'success',
         data: {
             username: userData?.get('userName'),
-            level: userData?.get('level'),
+            is_admin: userData?.get('is_admin'),
+            is_shop: userData?.get('is_shop'),
             createdAt: userData?.get('createdAt'),
             updatedAt: userData?.get('updatedAt')
         }

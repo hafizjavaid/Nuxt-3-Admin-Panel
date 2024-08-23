@@ -64,7 +64,7 @@ const isOutsideClicked = (event) => {
         </div>
         <div class="layout-main-container">
             <div class="layout-main">
-                <router-view></router-view>
+                <NuxtPage />
             </div>
             <app-footer></app-footer>
         </div>
