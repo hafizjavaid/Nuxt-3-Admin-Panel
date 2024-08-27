@@ -1,22 +1,22 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const Shop = dbInstance.define('Shops', {
+export const Shop_Language = dbInstance.define('Shop_Languages', {
     // เปลี่ยนชื่อเป็น 'Shop' (Singular)
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    latitude: {
-        type: DataTypes.DOUBLE,
+    shop_id: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
-    longitude: {
-        type: DataTypes.DOUBLE,
+    language_id: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
-    shop_picture: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -36,13 +36,13 @@ const Shop = dbInstance.define('Shops', {
 (async () => {
     try {
         await dbInstance.authenticate(); // ทดสอบการเชื่อมต่อ
-        console.log('Connection DB-Shops has been established successfully.');
+        console.log('Connection DB-Shops_Language has been established successfully.');
 
-        await Shop.sync({ force: false });
+        await Shop_Language.sync({ force: false });
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     } finally {
         //await dbInstance.close(); // ปิดการเชื่อมต่อ
     }
 })();
-export default Shop;
+export default Shop_Language;

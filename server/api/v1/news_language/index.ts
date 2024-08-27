@@ -1,8 +1,8 @@
-import Shop from '@/server/models/shops.model';
+import News_Language from '@/server/models/news_language.model';
 
 export default defineEventHandler(async (event) => {
     try {
-        const result = await Shop.findAll();
+        const result = await News_Language.findAll();
         return {
             status: 'success',
             data: result

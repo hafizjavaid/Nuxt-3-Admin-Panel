@@ -1,22 +1,27 @@
-import { defineEventHandler } from 'h3';
-import { uploadImage } from '~/services/upload-file-service';
-import Shop from '@/serer/models/shops.model';
+import News_Language from '@/server/models/news_language.model';
+import { uploadImage } from '~/server/services/upload-file-service';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = getRouterParam(event, 'id');
+
         const formData = await readMultipartFormData(event);
+
         const file = formData?.find((x) => x.name === 'file');
+
         const bodyRow = formData?.find((x) => x.name === 'body');
+
         if (!bodyRow) return { status: 'No data found', body: 'body is required' };
+
         const body = bodyRow ? JSON.parse(bodyRow.data.toString()) : null;
-        const result = await Shops.update(body, {
+
+        const result = await News_Language.update(body, {
             where: {
                 id
             }
         });
         if (file) {
-            uploadIMage(file, { id: id, ...result });
+            uploadImage(file, { id: id, ...result });
         }
         return {
             status: 'success',
@@ -24,7 +29,7 @@ export default defineEventHandler(async (event) => {
         };
     } catch (error) {
         return {
-            messge: 'Error update shop' + error.Message
+            message: 'Error update news' + error.Message
         };
     }
 });

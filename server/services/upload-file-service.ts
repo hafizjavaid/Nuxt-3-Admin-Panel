@@ -1,6 +1,6 @@
 import path from 'path';
 import * as fs from 'fs';
-import News from '@/server/models/news.model';
+import News from '@/server/models/news_language.model';
 
 export const uploadImage = async (file: any, doc: any) => {
     if (file.filename != null) {

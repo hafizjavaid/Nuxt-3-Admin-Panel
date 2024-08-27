@@ -7,52 +7,16 @@ const News = dbInstance.define('News', {
         primaryKey: true,
         autoIncrement: true
     },
-    news_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    language_id: {
+    category_id: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    title: {
-        type: DataTypes.STRING,
+    publish: {
+        type: DataTypes.DATE,
         allowNull: false
     },
-    cover_picture: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    detail: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    view: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    approved: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    reference: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    url: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    style: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    editor_data: {
-        type: DataTypes.STRING,
+    stop_date: {
+        type: DataTypes.DATE,
         allowNull: false
     },
     status: {
@@ -72,14 +36,16 @@ const News = dbInstance.define('News', {
 
 (async () => {
     try {
-        //await dbInstance.authenticate();
+        // ตรวจสอบการเชื่อมต่อฐานข้อมูล
+        await dbInstance.authenticate();
         console.log('Connection DB-News has been established successfully.');
 
-        await News.sync({ force: false });
+        // ซิงค์โมเดลกับฐานข้อมูล
+        await News.sync({ force: false }); // หรือใช้ alter: true หากต้องการเพียงปรับโครงสร้าง
+        console.log('News table created successfully.');
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
-    } finally {
-        //await dbInstance.close();
     }
 })();
+
 export default News;
