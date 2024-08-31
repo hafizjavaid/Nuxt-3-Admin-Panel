@@ -58,7 +58,7 @@ const News_Language = dbInstance.define('News_Languages', {
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'active'
+        defaultValue: 'isactive'
     },
     createdAt: {
         type: DataTypes.DATE,

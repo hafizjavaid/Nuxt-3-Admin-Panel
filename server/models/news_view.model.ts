@@ -1,34 +1,21 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const News = dbInstance.define('News', {
+const NewsView = dbInstance.define('News_views', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    category_id: {
-        type: DataTypes.STRING,
+    news_id: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
-    publish: {
+    read_date: {
         type: DataTypes.DATE,
         allowNull: false
-    },
-    stop_date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'isactive'
     },
     createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
-    updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     }
@@ -38,12 +25,13 @@ const News = dbInstance.define('News', {
     try {
         // ตรวจสอบการเชื่อมต่อฐานข้อมูล
         await dbInstance.authenticate();
-        console.log('Connection DB-News has been established successfully.');
+        console.log('Connection DB-News_View has been established successfully.');
+
         // ซิงค์โมเดลกับฐานข้อมูล
-        await News.sync({ force: false }); // หรือใช้ alter: true หากต้องการเพียงปรับโครงสร้าง
+        await NewsView.sync({ force: false }); // หรือใช้ alter: true หากต้องการเพียงปรับโครงสร้าง
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     }
 })();
 
-export default News;
+export default NewsView;

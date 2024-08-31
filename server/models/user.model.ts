@@ -23,14 +23,6 @@ const User = dbInstance.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW // แก้ไขการพิมพ์ผิด
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW // แก้ไขการพิมพ์ผิด
-    },
     is_admin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false // แก้ไขการพิมพ์ผิด
@@ -54,6 +46,18 @@ const User = dbInstance.define('Users', {
     is_editor: {
         type: DataTypes.BOOLEAN,
         defaultValue: false // แก้ไขการพิมพ์ผิด
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: false
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW // แก้ไขการพิมพ์ผิด
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW // แก้ไขการพิมพ์ผิด
     }
 });
 

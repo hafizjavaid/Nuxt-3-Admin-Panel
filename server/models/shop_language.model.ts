@@ -23,7 +23,7 @@ export const Shop_Language = dbInstance.define('Shop_Languages', {
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'active'
+        defaultValue: 'isactive'
     },
     createdAt: {
         type: DataTypes.DATE

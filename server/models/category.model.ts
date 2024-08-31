@@ -18,6 +18,11 @@ const Category = dbInstance.define('Categories', {
     title: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'isactive'
     }
 });
 

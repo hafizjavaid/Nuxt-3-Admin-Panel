@@ -1,31 +1,40 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const UserGetCoupon = dbInstance.define('User_Get_Coupons', {
+const Coupon = dbInstance.define('Coupons', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    user_id: {
+    shop_id: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    coupon_id: {
+    code: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    amount: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    get_date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    get_time: {
-        type: DataTypes.TIME,
+    url: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     status: {
         type: DataTypes.STRING,
+        allowNull: false,
         defaultValue: 'isactive'
+    },
+    publish_date: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    stop_date: {
+        type: DataTypes.DATE,
+        allowNull: false
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -39,14 +48,13 @@ const UserGetCoupon = dbInstance.define('User_Get_Coupons', {
 
 (async () => {
     try {
-        await dbInstance.authenticate(); // ทดสอบการเชื่อมต่อ
-        console.log('Connection DB-User_get_coupon has been established successfully.');
-
-        await UserGetCoupon.sync({ force: false });
+        //await dbInstance.authenticate();
+        console.log('Connection DB-Coupon has been established successfully.');
+        await Coupon.sync({ force: false });
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     } finally {
-        //await dbInstance.close(); // ปิดการเชื่อมต่อ
+        //await dbInstance.close();
     }
 })();
-export default UserGetCoupon; // ตรวจสอบว่ามีการส่งออกแบบนี้
+export default Coupon;
