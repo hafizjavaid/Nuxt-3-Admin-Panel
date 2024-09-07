@@ -1,15 +1,39 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const Category = dbInstance.define('Categories', {
+const AdsLanguage = dbInstance.define('Ads_Languages', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    icon: {
+    ads_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    language_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    title: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    detail: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    cover_picture: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    view: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    url: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     status: {
         type: DataTypes.STRING,
@@ -29,13 +53,13 @@ const Category = dbInstance.define('Categories', {
 (async () => {
     try {
         //await dbInstance.authenticate();
-        console.log('Connection DB-Category has been established successfully.');
+        console.log('Connection DB_Ads_Language has been established successfully.');
 
-        await Category.sync({ force: false });
+        await AdsLanguage.sync({ force: false });
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     } finally {
         //await dbInstance.close();
     }
 })();
-export default Category;
+export default AdsLanguage;

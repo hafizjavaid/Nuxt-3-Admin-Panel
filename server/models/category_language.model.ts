@@ -1,13 +1,21 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const Category = dbInstance.define('Categories', {
+const CategoryLanguage = dbInstance.define('Category_Languages', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    icon: {
+    category_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    language_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    title: {
         type: DataTypes.STRING,
         allowNull: true
     },
@@ -29,13 +37,13 @@ const Category = dbInstance.define('Categories', {
 (async () => {
     try {
         //await dbInstance.authenticate();
-        console.log('Connection DB-Category has been established successfully.');
+        console.log('Connection DB_Category_Language has been established successfully.');
 
-        await Category.sync({ force: false });
+        await CategoryLanguage.sync({ force: false });
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     } finally {
         //await dbInstance.close();
     }
 })();
-export default Category;
+export default CategoryLanguage;

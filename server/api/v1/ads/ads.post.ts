@@ -1,4 +1,4 @@
-import Category from '@/server/models/category.model';
+import Ads from '@/server/models/ads.model';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
         if (!bodyRow) return { result: 'No data found', data: 'body is required' };
         const body = bodyRow ? JSON.parse(bodyRow?.data.toString()) : null;
         if (!body) return { result: 'No data found', data: 'body is required' };
-        const result = await Category.create(body);
+        const result = await Ads.create(body);
         return {
             status: result ? 'success' : 'found',
             data: result

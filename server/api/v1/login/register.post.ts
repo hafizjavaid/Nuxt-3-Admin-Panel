@@ -4,6 +4,7 @@ import User from '@/server/models/user.model';
 import bcrypt from 'bcryptjs';
 export default defineEventHandler(async (event) => {
     const body = await readBody<registerDto>(event);
+    const test = body.password;
     body.password = await bcrypt.hash(body.password, 10);
 
     const userData = await User.findOne({
@@ -18,6 +19,7 @@ export default defineEventHandler(async (event) => {
         });
     }
     try {
+        console.log();
         const result = await User.create(body);
         return { status: 201, data: result };
     } catch (error) {

@@ -26,7 +26,8 @@
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.49.1",
-        "sequelize": "^6.37.3"
+        "sequelize": "^6.37.3",
+        "sweetalert2": "^11.13.2"
     },
     "devDependencies": {
         "@babel/core": "^7.24.9",

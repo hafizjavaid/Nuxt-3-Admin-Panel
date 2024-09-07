@@ -1,8 +1,9 @@
-import Coupon from '@/server/models/coupon.model';
+import CategoryLanguage from '@/server/models/category_language.model';
 
 export default defineEventHandler(async (event) => {
     try {
-        const result = await Coupon.findAll();
+        console.log('xxxx');
+        const result = await CategoryLanguage.findAll();
         return {
             status: 'success',
             data: result

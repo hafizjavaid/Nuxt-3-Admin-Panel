@@ -1,15 +1,31 @@
 import { DataTypes } from 'sequelize';
 import dbInstance from '../db_instance';
 
-const Category = dbInstance.define('Categories', {
+const CouponLanguage = dbInstance.define('Coupon_Languages', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    icon: {
+    coupon_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    language_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    title: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    detail: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    picture: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     status: {
         type: DataTypes.STRING,
@@ -29,13 +45,12 @@ const Category = dbInstance.define('Categories', {
 (async () => {
     try {
         //await dbInstance.authenticate();
-        console.log('Connection DB-Category has been established successfully.');
-
-        await Category.sync({ force: false });
+        console.log('Connection DB-Coupon_Language has been established successfully.');
+        await CouponLanguage.sync({ force: false });
     } catch (error) {
         console.error('Unable to connect to the database or create table:', error);
     } finally {
         //await dbInstance.close();
     }
 })();
-export default Category;
+export default CouponLanguage;

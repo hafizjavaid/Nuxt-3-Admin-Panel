@@ -25,9 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
             fetchingStatus.value = FetchingStatus.fetching;
             await new Promise((resolve) => setTimeout(resolve, 100));
             const { result, data } = await api.login(loginDto);
-            console.log('>>>>>>>');
-            console.log(result);
-            console.log('<<<<<<<');
+            console.log('testxx');
             if (result === 'ok') {
                 token.value = 'DUMP TOKEN';
                 userName.value = data.userName;

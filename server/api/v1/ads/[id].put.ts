@@ -1,4 +1,4 @@
-import Category from '@/server/models/category.model';
+import Ads from '@/server/models/ads.model';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
         const body = bodyRow ? JSON.parse(bodyRow.data.toString()) : null;
 
-        const result = await Category.update(body, {
+        const result = await Ads.update(body, {
             where: {
                 id
             }

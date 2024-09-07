@@ -67,4 +67,7 @@ definePageMeta({
     transform: scale(1.6);
     margin-right: 1rem;
 }
+.swal2-confirm .swal2-styled {
+    color: green;
+}
 </style>

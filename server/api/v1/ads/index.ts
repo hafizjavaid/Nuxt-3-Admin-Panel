@@ -1,8 +1,8 @@
-import Coupon from '@/server/models/coupon.model';
+import Ads from '@/server/models/ads.model';
 
 export default defineEventHandler(async (event) => {
     try {
-        const result = await Coupon.findAll();
+        const result = await Ads.findAll();
         return {
             status: 'success',
             data: result

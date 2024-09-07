@@ -7,6 +7,7 @@ const { fetch } = useFetcher();
 
 export const login = async (loginDto: LoginDto) => {
     try {
+        console.log('page auth-api-service');
         const result = (await fetch(`${server.LOGIN_URL}`, {
             method: 'POST',
             headers: {

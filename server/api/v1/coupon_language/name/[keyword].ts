@@ -1,10 +1,9 @@
 import { Op } from 'sequelize';
-import News_Language from '~/server/models/news_language.model';
+import CouponLanguage from '~/server/models/coupon_language.model';
 export default defineEventHandler(async (event) => {
     const keyword = getRouterParam(event, 'keyword');
     const keywordDecode = decodeURIComponent(keyword);
-    const result = await News_Language.findAll({
-        attributes: ['title'],
+    const result = await CouponLanguage.findAll({
         where: {
             title: {
                 [Op.like]: `%${keywordDecode}%`

@@ -1,4 +1,4 @@
-import Category from '@/server/models/category.model';
+import AdsLanguage from '@/server/models/ads_language.model';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
         const body = bodyRow ? JSON.parse(bodyRow.data.toString()) : null;
 
-        const result = await Category.update(body, {
+        const result = await AdsLanguage.update(body, {
             where: {
                 id
             }
