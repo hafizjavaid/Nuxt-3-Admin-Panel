@@ -33,7 +33,8 @@ export const useFetcher = () => {
                 ...fetchConfig,
                 ...options
             })) as any;
-
+            console.log(response);
+            console.log('page-useFetcher');
             return await response;
         } catch (error: any) {
             Swal.fire({

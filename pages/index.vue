@@ -3,40 +3,7 @@ import { useLayout } from '@/layouts/composables/layout';
 import { onMounted, reactive, ref, watch } from 'vue';
 const { isDarkTheme } = useLayout();
 const products = ref(null);
-const lineData = reactive(
-        {
-            name: 'First Dataset',
-            name_picture: 'testKai.jpg',
-            detail: 'คู่มันหยุดโลก เจ้านำแดงไก่จากชัยภูมิ พบกับ เจ้าแข่งทองจากอุบณฯ',
-            money: '1,000,000',
-            date_fighter: '01-01-2024',
-            roun_fighter: 5,
-        },
-        {
-            name: 'First Dataset',
-            name_picture: 'testKai.jpg',
-            detail: 'คู่มันหยุดโลก เจ้านำแดงไก่จากชัยภูมิ พบกับ เจ้าแข่งทองจากอุบณฯ',
-            money: '1,000,000',
-            date_fighter: '01-01-2024',
-            roun_fighter: 5,
-        },
-        {
-            name: 'First Dataset',
-            name_picture: 'testKai.jpg',
-            detail: 'คู่มันหยุดโลก เจ้านำแดงไก่จากชัยภูมิ พบกับ เจ้าแข่งทองจากอุบณฯ',
-            money: '1,000,000',
-            date_fighter: '01-01-2024',
-            roun_fighter: 5,
-        },
-        {
-            name: 'First Dataset',
-            name_picture: 'testKai.jpg',
-            detail: 'คู่มันหยุดโลก เจ้านำแดงไก่จากชัยภูมิ พบกับ เจ้าแข่งทองจากอุบณฯ',
-            money: '1,000,000',
-            date_fighter: '01-01-2024',
-            roun_fighter: 5,
-        }
-);
+
 const items = ref([
     { label: 'Add New', icon: 'pi pi-fw pi-plus' },
     { label: 'Remove', icon: 'pi pi-fw pi-minus' }
@@ -130,21 +97,77 @@ function test() {
 
 <template>
     <div class="grid">
-       
-        <div class="col-12 lg:col-6 xl:col-3 cursor-pointer" @click="test">
+        <!-- การ์ดที่ 1 -->
+        <div class="col-12 lg:col-4 cursor-pointer" @click="test">
             <div class="card">
-                <span class="text-green-500 font-medium">สนามไก่ชนมหาลาภ</span>
                 <div class="flex justify-content-between mb-6">
                     <div class="mt-1">
-                        <img height="100" src="../public/demo/images/kai/testKai.jpg">ใส่รูปไก่
+                        <img height="80" src="@/assets/images/dashboard/ads.png">
                     </div>
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"></div>
-
                 </div>
-                <span class="text-green-500 font-medium">24-08-2024 </span>
-                <span class="text-500">ชิงเงินรางวัล 1,000,000 B</span>
+                <hr>
+                <div class="flex items-center">
+                    <i class="pi pi-fw pi-eye"></i>
+                    <span class="text-gray-500 font-medium ml-2">Ads total 222</span>
+                </div>
             </div>
         </div>
-        
+
+        <!-- การ์ดที่ 2 -->
+        <div class="col-12 lg:col-4 cursor-pointer" @click="test">
+            <div class="card">
+
+                <div class="flex justify-content-between mb-6">
+                    <div class="mt-1">
+                        <img height="80" src="@/assets/images/dashboard/news.png">
+                    </div>
+                </div>
+                <hr>
+                <div class="flex items-center">
+                    <i class="pi pi-fw pi-eye"></i>
+                    <span class="text-gray-500 font-medium ml-2">News total 222</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- การ์ดที่ 3 -->
+        <div class="col-12 lg:col-4 cursor-pointer" @click="test">
+            <div class="card">
+                <div class="flex justify-content-between mb-6">
+                    <div class="mt-1">
+                        <img height="80" src="@/assets/images/dashboard/user.png">
+                    </div>
+                </div>
+                <hr>
+                <div class="flex items-center">
+                    <i class="pi pi-fw pi-eye"></i>
+                    <span class="text-gray-500 font-medium ml-2">User total 222</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <h5>Summary Top10</h5>
+                <TabView>
+                    <TabPanel header="DAILY">
+                        <SUMMARY period="daily" />
+                    </TabPanel>
+                    <TabPanel header="WEEKLY">
+                        <SUMMARY period="weekly" />
+                    </TabPanel>
+                    <TabPanel header="MONTHLY">
+                        <SUMMARY period="monthly" />
+                    </TabPanel>
+                    <TabPanel header="YEARLY">
+                        <SUMMARY period="yearly" />
+                    </TabPanel>
+                    <TabPanel header="TOTAL">
+                        <SUMMARY period="all" />
+                    </TabPanel>
+                </TabView>
+            </div>
+        </div>
     </div>
 </template>

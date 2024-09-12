@@ -7,7 +7,6 @@ const { fetch } = useFetcher();
 
 export const login = async (loginDto: LoginDto) => {
     try {
-        console.log('page auth-api-service');
         const result = (await fetch(`${server.LOGIN_URL}`, {
             method: 'POST',
             headers: {
@@ -15,6 +14,10 @@ export const login = async (loginDto: LoginDto) => {
             },
             body: JSON.stringify(loginDto)
         })) as Promise<TLogin>;
+
+        console.log(result);
+        console.log('page auth-api-service');
+
         return result;
     } catch (error) {
         console.error('Error:', error);

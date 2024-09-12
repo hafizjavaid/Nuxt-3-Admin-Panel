@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
             fetchingStatus.value = FetchingStatus.fetching;
             await new Promise((resolve) => setTimeout(resolve, 100));
             const { result, data } = await api.login(loginDto);
-            console.log('testxx');
+            console.log(result);
             if (result === 'ok') {
                 token.value = 'DUMP TOKEN';
                 userName.value = data.userName;
@@ -42,7 +42,18 @@ export const useAuthStore = defineStore('auth', () => {
         }
     };
 
-    return { session, login, restoreSession }; // Return the functions and state that you need
+    const logout = async () => {
+        userName.value = null;
+        token.value = null;
+        session.isLoggedIn = false;
+        session.userName = undefined;
+        //message.success('Logout successful');
+        return await navigateTo('/auth/login');
+    };
+
+    const isLoading = () => fetchingStatus.value === FetchingStatus.fetching;
+
+    return { session, login, logout, isLoading, restoreSession }; // Return the functions and state that you need
 });
 
 export default useAuthStore;

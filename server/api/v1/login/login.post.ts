@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
         });
     }
     return {
+        result: 'ok',
         status: 'success',
         data: userData
     };

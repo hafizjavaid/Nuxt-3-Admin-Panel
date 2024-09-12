@@ -7,6 +7,10 @@ const User = dbInstance.define('Users', {
         autoIncrement: true,
         primaryKey: true
     },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     userName: {
         type: DataTypes.STRING,
         allowNull: true

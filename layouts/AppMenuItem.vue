@@ -88,4 +88,21 @@ const checkActiveRoute = (item) => {
     </li>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    .layout-menuitem-icon {
+        color: gray;
+        font-size: 30px;
+        /* เปลี่ยนสีไอคอนของเมนู */
+    }
+    a, .router-link {
+            color: gray;
+            /* เปลี่ยนสีลิงก์ */
+    }
+    .menu-item .layout-menuitem-text {
+        font-size: 20px;
+        color: gray;
+    }
+    .active-menuitem {
+      color: gray;
+    }
+</style>
