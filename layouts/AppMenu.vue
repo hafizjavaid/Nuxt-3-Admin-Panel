@@ -20,8 +20,7 @@ const model = ref([
         items: [{ label: 'Ads', icon: 'pi pi-fw pi-amazon', to: '/' }]
     },
     {
-        items: [{
-            label: 'Categories', icon: 'pi pi-fw pi-align-justify', to: '/' }]
+        items: [{ label: 'Categories', icon: 'pi pi-fw pi-align-justify', to: '/' }]
     },
     {
         items: [{ label: 'Privilege', icon: 'pi pi-fw pi-bookmark', to: '/' }]
