@@ -9,7 +9,7 @@
                         </div>
                         <div class="custom-col input-container">
                             <InputText type="text" name="search" placeholder="Search" class="underline-input"
-                                v-model="searchQuery" />
+                                 />
                             <i class="pi pi-search search-icon" @click="search"></i>
                         </div>
                         <div class="custom-col rigthB">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div>
-                        <DataTable :value="customer2" :scrollable="true" :paginator="true" scrollHeight="400px"
+                        <DataTable :value="dataTeams" :scrollable="true" :paginator="true" scrollHeight="400px"
                             :loading="loading2" scrollDirection="both" class="mt-3">
                             <Column field="userName" header="Username" style="min-width: 150px" frozen></Column>
                             <Column field="name" header="Name" style="min-width: 150px" :frozen="idFrozen"></Column>
@@ -149,6 +149,7 @@ import { useConfirm } from 'primevue/useconfirm';
 
 const display = ref(false);
 const isEditMode = ref(false);
+const dataTeams = ref(null);
 const formData = ref({
     userType: '',
     gender: '',
@@ -156,7 +157,8 @@ const formData = ref({
     name: '',
     password: '',
     email: '',
-    phone: ''
+    phone: '',
+    picture: ''
 });
  
 const open = () => {

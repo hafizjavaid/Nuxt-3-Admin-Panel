@@ -8,6 +8,7 @@ export const imgUrl = import.meta.env.VITE_BACKEND_BASE_URL + '/images/news';
 export const server = {
     LOGIN_URL: `login/login`,
     NEWS_URL: `News`,
+    USER_URL: `user`,
     TRANSACTION_URL: `transaction`,
     TOKEN_KEY: `token`,
     USERNAME: `userName`
