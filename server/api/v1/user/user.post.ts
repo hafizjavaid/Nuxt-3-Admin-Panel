@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
             userName: body.userName
         }
     });
+    
     if (userData) {
         throw createError({
             status: '409',
